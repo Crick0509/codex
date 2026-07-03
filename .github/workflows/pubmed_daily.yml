@@ -25,7 +25,7 @@ jobs:
 
       - name: Generate daily brief
         env:
-          NCBI_EMAIL: ${{ secrets.NCBI_EMAIL }}
+          NCBI_EMAIL: changzh@cmu.edu.cn
           NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: ${{ secrets.OPENAI_MODEL || 'gpt-4.1-mini' }}
