@@ -1,0 +1,41 @@
+priority_journals:
+  - Nature
+  - Science
+  - Cell
+  - Nature Medicine
+  - New England Journal of Medicine
+  - The Lancet
+  - JAMA
+  - Nature Genetics
+  - Nature Biotechnology
+  - Nature Cancer
+  - Cancer Cell
+  - Nature Reviews Cancer
+  - Nature Methods
+  - Nature Biomedical Engineering
+  - Nature Communications
+  - Cell Genomics
+  - Cell Metabolism
+  - Immunity
+  - Cancer Discovery
+  - Journal of Clinical Oncology
+  - Annals of Oncology
+  - JAMA Oncology
+  - Lancet Oncology
+  - Clinical Cancer Research
+  - Genome Medicine
+  - Genome Biology
+  - Bioinformatics
+  - Briefings in Bioinformatics
+  - Annals of Internal Medicine
+  - The BMJ
+  - Radiology
+  - European Urology
+  - Journal of Pathology
+  - Modern Pathology
+  - Clinical Chemistry
+  - American Journal of Human Genetics
+  - PLOS Medicine
+notes:
+  - "This whitelist is intentionally conservative and does not encode impact factors."
+  - "Only state local whitelist priority, not CAS Q1 or exact impact factor."

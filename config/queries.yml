@@ -1,0 +1,97 @@
+categories:
+  single_cell_spatial:
+    label: "方向一：单细胞测序与空间转录组"
+    max_papers: 3
+    query: >
+      ((cancer OR tumor OR tumour OR carcinoma OR "renal cancer" OR "kidney cancer" OR
+      "renal cell carcinoma" OR ccRCC OR "clear cell renal cell carcinoma")
+      AND ("single-cell" OR "single cell" OR scRNA-seq OR "single-cell RNA sequencing" OR
+      "spatial transcriptomics" OR "spatial omics" OR "spatial proteomics" OR
+      "tumor microenvironment" OR "immune microenvironment"))
+    boost_terms:
+      - single-cell
+      - scRNA
+      - spatial
+      - microenvironment
+      - renal
+      - kidney
+      - ccRCC
+  experimental_mechanisms:
+    label: "方向二：生物学实验与机制验证"
+    max_papers: 3
+    query: >
+      ((cancer OR tumor OR carcinoma OR "renal cancer" OR "kidney cancer" OR
+      "renal cell carcinoma" OR ccRCC)
+      AND (mechanism OR "functional validation" OR knockout OR knockdown OR
+      overexpression OR organoid OR "mouse model" OR xenograft OR CRISPR OR
+      metastasis OR "immune escape" OR "therapy resistance"))
+    boost_terms:
+      - mechanism
+      - knockout
+      - knockdown
+      - organoid
+      - xenograft
+      - CRISPR
+      - metastasis
+      - resistance
+      - renal
+      - kidney
+  lactylation_metabolism_epigenetics:
+    label: "方向三：乳酸化、肿瘤代谢与表观遗传"
+    max_papers: 3
+    query: >
+      ((lactylation OR "lysine lactylation" OR "histone lactylation" OR Kla OR
+      H3K18la OR H4K12la OR lactate OR glycolysis OR "metabolic reprogramming" OR
+      ALDOA OR SIRT7 OR LDHA OR MCT1 OR MCT4 OR epigenetics OR
+      "post-translational modification")
+      AND (cancer OR tumor OR carcinoma OR "renal cancer" OR "kidney cancer" OR ccRCC))
+    boost_terms:
+      - lactylation
+      - lactate
+      - glycolysis
+      - ALDOA
+      - SIRT7
+      - LDHA
+      - MCT1
+      - MCT4
+      - epigenetic
+      - renal
+  pathomics_radiomics_ai:
+    label: "方向四：病理组学、影像组学、AI 与多模态建模"
+    max_papers: 3
+    query: >
+      (("digital pathology" OR "computational pathology" OR pathomics OR
+      "whole-slide image" OR WSI OR radiomics OR radiogenomics OR radiopathomics OR
+      "medical imaging" OR "deep learning" OR "machine learning" OR
+      "artificial intelligence" OR multimodal)
+      AND (cancer OR tumor OR "renal cancer" OR "kidney cancer" OR ccRCC))
+    boost_terms:
+      - pathology
+      - pathomics
+      - radiomics
+      - radiogenomics
+      - radiopathomics
+      - imaging
+      - deep learning
+      - machine learning
+      - multimodal
+      - renal
+  cohorts_mr_multiomics:
+    label: "方向五：UK Biobank、MR、多组学队列与流行病学数据库挖掘"
+    max_papers: 3
+    query: >
+      (("UK Biobank" OR "large cohort" OR "prospective cohort" OR
+      "Mendelian randomization" OR MR OR pQTL OR eQTL OR GWAS OR proteomics OR
+      metabolomics OR "multi-omics" OR exposome)
+      AND (cancer OR "kidney cancer" OR "renal cancer" OR "renal cell carcinoma" OR ccRCC))
+    boost_terms:
+      - UK Biobank
+      - Mendelian randomization
+      - pQTL
+      - eQTL
+      - GWAS
+      - proteomics
+      - metabolomics
+      - multi-omics
+      - exposome
+      - renal
