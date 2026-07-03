@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import sys
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -20,6 +20,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--retmax", type=int, default=100, help="Maximum PMIDs to retrieve per category and date type.")
     parser.add_argument("--include-seen", action="store_true", help="Include papers already stored in data/seen_pmids.json.")
     parser.add_argument("--dry-run", action="store_true", help="Generate report without updating seen_pmids.json.")
+    parser.add_argument("--date", type=str, default="", help="Optional target date in YYYY-MM-DD format for one-day EDAT/PDAT search.")
     return parser.parse_args()
 
 
@@ -40,12 +41,13 @@ def main() -> int:
         cache = SeenCache(PROJECT_ROOT / "data" / "seen_pmids.json")
         seen_pmids = set() if args.include_seen else cache.load()
         client = PubMedClient.from_env()
+        target_date = date.fromisoformat(args.date) if args.date else None
 
         raw_pmids: dict[str, list[str]] = {}
         all_pmids: list[str] = []
         for category_key, config in categories.items():
             query = config["query"]
-            pmids = client.search_recent_pmids(query=query, hours=args.hours, retmax=args.retmax)
+            pmids = client.search_recent_pmids(query=query, hours=args.hours, retmax=args.retmax, target_date=target_date)
             raw_pmids[category_key] = pmids
             all_pmids.extend(pmids)
 
@@ -58,6 +60,8 @@ def main() -> int:
         selected = selector.assign_and_select(papers_by_category, categories, seen_pmids)
 
         run_time = datetime.now(ZoneInfo("Asia/Shanghai"))
+        if target_date:
+            run_time = run_time.replace(year=target_date.year, month=target_date.month, day=target_date.day)
         writer = ReportWriter(PROJECT_ROOT / "reports", Summarizer())
         report_path = writer.write(selected, categories, run_time)
 

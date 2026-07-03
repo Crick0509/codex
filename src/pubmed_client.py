@@ -4,7 +4,7 @@ import logging
 import os
 import time
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from typing import Any
 from urllib.error import HTTPError, URLError
 
@@ -63,24 +63,33 @@ class PubMedClient:
                 time.sleep(wait)
         raise RuntimeError(f"Entrez request failed after retries: {last_error}")
 
-    def search_recent_pmids(self, query: str, hours: int = 24, retmax: int = 100) -> list[str]:
+    def search_recent_pmids(
+        self,
+        query: str,
+        hours: int = 24,
+        retmax: int = 100,
+        target_date: date | None = None,
+    ) -> list[str]:
         # PubMed supports relative date searches by day. Combining EDAT and PDAT catches
         # newly indexed records and newly published records without fabricating timestamps.
-        terms = [
-            f"({query})",
-        ]
+        term = f"({query})"
         found: list[str] = []
         for datetype in ("edat", "pdat"):
             try:
-                result = self._read_with_retries(
-                    Entrez.esearch,
-                    db="pubmed",
-                    term=terms[0],
-                    reldate=1 if hours <= 24 else max(1, round(hours / 24)),
-                    datetype=datetype,
-                    retmax=retmax,
-                    sort="pub date",
-                )
+                params = {
+                    "db": "pubmed",
+                    "term": term,
+                    "datetype": datetype,
+                    "retmax": retmax,
+                    "sort": "pub date",
+                }
+                if target_date:
+                    day = target_date.strftime("%Y/%m/%d")
+                    params["mindate"] = day
+                    params["maxdate"] = day
+                else:
+                    params["reldate"] = 1 if hours <= 24 else max(1, round(hours / 24))
+                result = self._read_with_retries(Entrez.esearch, **params)
                 ids = [str(item) for item in result.get("IdList", [])]
                 self.logger.info("Search datetype=%s returned %s PMIDs for query: %s", datetype, len(ids), query)
                 found.extend(ids)

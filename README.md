@@ -52,6 +52,12 @@ python main.py --dry-run
 python main.py --include-seen --dry-run
 ```
 
+生成指定日期的一日检索报告：
+
+```bash
+python main.py --date 2026-07-03 --include-seen --dry-run
+```
+
 ## GitHub Actions 部署
 
 在 GitHub 仓库的 Settings → Secrets and variables → Actions 中添加：
