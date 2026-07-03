@@ -1,0 +1,29 @@
+2026-07-03 20:11:49,664 | INFO | pubmed_cancer_brief | Starting PubMed Cancer Research Daily Brief
+2026-07-03 20:11:50,568 | INFO | src.pubmed_client | Search datetype=edat returned 100 PMIDs for query: ((cancer OR tumor OR tumour OR carcinoma OR "renal cancer" OR "kidney cancer" OR "renal cell carcinoma" OR ccRCC OR "clear cell renal cell carcinoma") AND ("single-cell" OR "single cell" OR scRNA-seq OR "single-cell RNA sequencing" OR "spatial transcriptomics" OR "spatial omics" OR "spatial proteomics" OR "tumor microenvironment" OR "immune microenvironment"))
+
+2026-07-03 20:11:51,167 | INFO | src.pubmed_client | Search datetype=pdat returned 94 PMIDs for query: ((cancer OR tumor OR tumour OR carcinoma OR "renal cancer" OR "kidney cancer" OR "renal cell carcinoma" OR ccRCC OR "clear cell renal cell carcinoma") AND ("single-cell" OR "single cell" OR scRNA-seq OR "single-cell RNA sequencing" OR "spatial transcriptomics" OR "spatial omics" OR "spatial proteomics" OR "tumor microenvironment" OR "immune microenvironment"))
+
+2026-07-03 20:11:51,843 | INFO | src.pubmed_client | Search datetype=edat returned 100 PMIDs for query: ((cancer OR tumor OR carcinoma OR "renal cancer" OR "kidney cancer" OR "renal cell carcinoma" OR ccRCC) AND (mechanism OR "functional validation" OR knockout OR knockdown OR overexpression OR organoid OR "mouse model" OR xenograft OR CRISPR OR metastasis OR "immune escape" OR "therapy resistance"))
+
+2026-07-03 20:11:52,472 | INFO | src.pubmed_client | Search datetype=pdat returned 100 PMIDs for query: ((cancer OR tumor OR carcinoma OR "renal cancer" OR "kidney cancer" OR "renal cell carcinoma" OR ccRCC) AND (mechanism OR "functional validation" OR knockout OR knockdown OR overexpression OR organoid OR "mouse model" OR xenograft OR CRISPR OR metastasis OR "immune escape" OR "therapy resistance"))
+
+2026-07-03 20:11:53,072 | INFO | src.pubmed_client | Search datetype=edat returned 100 PMIDs for query: ((lactylation OR "lysine lactylation" OR "histone lactylation" OR Kla OR H3K18la OR H4K12la OR lactate OR glycolysis OR "metabolic reprogramming" OR ALDOA OR SIRT7 OR LDHA OR MCT1 OR MCT4 OR epigenetics OR "post-translational modification") AND (cancer OR tumor OR carcinoma OR "renal cancer" OR "kidney cancer" OR ccRCC))
+
+2026-07-03 20:11:53,686 | INFO | src.pubmed_client | Search datetype=pdat returned 62 PMIDs for query: ((lactylation OR "lysine lactylation" OR "histone lactylation" OR Kla OR H3K18la OR H4K12la OR lactate OR glycolysis OR "metabolic reprogramming" OR ALDOA OR SIRT7 OR LDHA OR MCT1 OR MCT4 OR epigenetics OR "post-translational modification") AND (cancer OR tumor OR carcinoma OR "renal cancer" OR "kidney cancer" OR ccRCC))
+
+2026-07-03 20:11:54,318 | INFO | src.pubmed_client | Search datetype=edat returned 100 PMIDs for query: (("digital pathology" OR "computational pathology" OR pathomics OR "whole-slide image" OR WSI OR radiomics OR radiogenomics OR radiopathomics OR "medical imaging" OR "deep learning" OR "machine learning" OR "artificial intelligence" OR multimodal) AND (cancer OR tumor OR "renal cancer" OR "kidney cancer" OR ccRCC))
+
+2026-07-03 20:11:54,923 | INFO | src.pubmed_client | Search datetype=pdat returned 81 PMIDs for query: (("digital pathology" OR "computational pathology" OR pathomics OR "whole-slide image" OR WSI OR radiomics OR radiogenomics OR radiopathomics OR "medical imaging" OR "deep learning" OR "machine learning" OR "artificial intelligence" OR multimodal) AND (cancer OR tumor OR "renal cancer" OR "kidney cancer" OR ccRCC))
+
+2026-07-03 20:11:55,701 | INFO | src.pubmed_client | Search datetype=edat returned 100 PMIDs for query: (("UK Biobank" OR "large cohort" OR "prospective cohort" OR "Mendelian randomization" OR MR OR pQTL OR eQTL OR GWAS OR proteomics OR metabolomics OR "multi-omics" OR exposome) AND (cancer OR "kidney cancer" OR "renal cancer" OR "renal cell carcinoma" OR ccRCC))
+
+2026-07-03 20:11:56,292 | INFO | src.pubmed_client | Search datetype=pdat returned 71 PMIDs for query: (("UK Biobank" OR "large cohort" OR "prospective cohort" OR "Mendelian randomization" OR MR OR pQTL OR eQTL OR GWAS OR proteomics OR metabolomics OR "multi-omics" OR exposome) AND (cancer OR "kidney cancer" OR "renal cancer" OR "renal cell carcinoma" OR ccRCC))
+
+2026-07-03 20:11:56,292 | INFO | pubmed_cancer_brief | Fetched 465 unique PMIDs before metadata retrieval
+2026-07-03 20:12:02,904 | INFO | src.paper_filter | Selected 3 papers for single_cell_spatial
+2026-07-03 20:12:02,943 | INFO | src.paper_filter | Selected 3 papers for experimental_mechanisms
+2026-07-03 20:12:02,973 | INFO | src.paper_filter | Selected 3 papers for lactylation_metabolism_epigenetics
+2026-07-03 20:12:03,007 | INFO | src.paper_filter | Selected 3 papers for pathomics_radiomics_ai
+2026-07-03 20:12:03,044 | INFO | src.paper_filter | Selected 3 papers for cohorts_mr_multiomics
+2026-07-03 20:12:03,053 | INFO | pubmed_cancer_brief | Updated seen cache with 15 PMIDs
+2026-07-03 20:12:03,053 | INFO | pubmed_cancer_brief | Report written to /home/runner/work/codex/codex/reports/2026-07-04_pubmed_cancer_brief.md
