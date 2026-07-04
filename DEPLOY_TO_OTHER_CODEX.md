@@ -114,6 +114,24 @@ https://github.com/Crick0509/codex.git
 - `data/seen_pmids.json`
 - `reports/`
 - `.github/workflows/pubmed_daily.yml`
+- `sync_reports.ps1`
+
+## 在另一台 Windows 电脑上同步 GitHub 日报到本地
+
+如果希望 GitHub Actions 生成的报告每天也自动出现在本地电脑文件夹，可以让 Codex 在新电脑上创建 Windows 任务计划：
+
+```powershell
+$Action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument '-NoProfile -ExecutionPolicy Bypass -File "你的项目路径\sync_reports.ps1"'
+$Trigger = New-ScheduledTaskTrigger -Daily -At 5:00AM
+$Settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -MultipleInstances IgnoreNew
+Register-ScheduledTask -TaskName 'PubMedCancerBriefLocalSync' -Action $Action -Trigger $Trigger -Settings $Settings -Description 'Pull GitHub PubMed cancer brief reports to local folder every morning.' -Force
+```
+
+也可以手动同步：
+
+```powershell
+powershell.exe -ExecutionPolicy Bypass -File .\sync_reports.ps1
+```
 
 ## 给另一台 Codex 的一句话指令
 
