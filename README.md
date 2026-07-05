@@ -1,6 +1,6 @@
 # PubMed Cancer Research Daily Brief
 
-自动检索过去 24 小时 PubMed 新发表或新收录的癌症相关高水平论文，并生成中文 Markdown 日报，重点服务肾癌/ccRCC、乳酸化、ALDOA-K230、SIRT7、UK Biobank、多组学、病理组学、影像组学、单细胞和医院队列验证方向。
+自动检索过去 24 小时 PubMed 新发表或新收录的癌症相关高水平论文，并生成中文日报，重点服务肾癌/ccRCC、乳酸化、ALDOA-K230、SIRT7、UK Biobank、多组学、病理组学、影像组学、单细胞和医院队列验证方向。
 
 ## 功能
 
@@ -11,7 +11,9 @@
 - 使用 `data/seen_pmids.json` 避免重复汇报。
 - 支持本地 journal priority whitelist，但不编造影响因子或 CAS 分区。
 - 没有 `OPENAI_API_KEY` 时仍可运行；有 key 时会增强中文摘要。
-- 输出到 `reports/YYYY-MM-DD_pubmed_cancer_brief.md`。
+- 同时输出 Markdown 和 Word 文件：
+  - `reports/YYYY-MM-DD_pubmed_cancer_brief.md`
+  - `reports/YYYY-MM-DD_pubmed_cancer_brief.docx`
 
 ## 本地运行
 
@@ -60,20 +62,31 @@ python main.py --date 2026-07-03 --include-seen --dry-run
 
 ## GitHub Actions 部署
 
-在 GitHub 仓库的 Settings → Secrets and variables → Actions 中添加：
-
-- `NCBI_EMAIL`：必填。
-- `NCBI_API_KEY`：可选但推荐。
-- `OPENAI_API_KEY`：如需 LLM 中文增强摘要则填写。
-- `OPENAI_MODEL`：可选，默认 `gpt-4.1-mini`。
-
 工作流位于 `.github/workflows/pubmed_daily.yml`，每天北京时间 03:00 自动运行。对应 UTC cron：
 
 ```yaml
 cron: "0 19 * * *"
 ```
 
-工作流会提交新增日报、日志和 `seen_pmids.json` 更新。
+`NCBI_EMAIL` 已在 workflow 中配置为 `changzh@cmu.edu.cn`。
+
+如果需要 LLM 增强摘要，在 GitHub 仓库的 Settings -> Secrets and variables -> Actions 中添加：
+
+- `NCBI_API_KEY`：可选但推荐。
+- `OPENAI_API_KEY`：如需 LLM 中文增强摘要则填写。
+- `OPENAI_MODEL`：可选，默认 `gpt-4.1-mini`。
+
+工作流会提交新增 Markdown 日报、Word 日报、日志和 `seen_pmids.json` 更新。
+
+## 本地自动同步
+
+如果希望 GitHub Actions 生成的报告每天也自动同步到本地电脑，可以使用：
+
+```powershell
+powershell.exe -ExecutionPolicy Bypass -File .\sync_reports.ps1
+```
+
+当前电脑已创建 Windows 任务计划 `PubMedCancerBriefLocalSync`，每天 05:00 自动同步 GitHub 仓库中的新报告。
 
 ## 事实性规则
 

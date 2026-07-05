@@ -51,6 +51,7 @@ python main.py --date 2026-07-03 --include-seen --dry-run
 
 ```text
 reports/YYYY-MM-DD_pubmed_cancer_brief.md
+reports/YYYY-MM-DD_pubmed_cancer_brief.docx
 ```
 
 ## GitHub Actions 自动运行

@@ -35,4 +35,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Add daily PubMed cancer brief"
-          file_pattern: "reports/*.md data/seen_pmids.json logs/*.log"
+          file_pattern: "reports/*.md reports/*.docx data/seen_pmids.json logs/*.log"

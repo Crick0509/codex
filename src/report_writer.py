@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from pathlib import Path
+from typing import Iterable
 
 from .pubmed_client import Paper
 from .summarizer import Summarizer
@@ -52,7 +53,100 @@ class ReportWriter:
         lines.extend(self._specific_inspiration())
         lines.extend(self._followups())
         path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+        self._write_docx(path, lines)
         return path
+
+    def _write_docx(self, markdown_path: Path, lines: Iterable[str]) -> Path:
+        from docx import Document
+        from docx.enum.text import WD_ALIGN_PARAGRAPH
+        from docx.oxml import OxmlElement
+        from docx.shared import Inches, Pt
+
+        docx_path = markdown_path.with_suffix(".docx")
+        doc = Document()
+
+        section = doc.sections[0]
+        section.top_margin = Inches(0.7)
+        section.bottom_margin = Inches(0.7)
+        section.left_margin = Inches(0.8)
+        section.right_margin = Inches(0.8)
+
+        normal = doc.styles["Normal"]
+        normal.font.name = "Microsoft YaHei"
+        normal.font.size = Pt(10.5)
+        self._set_east_asia_font(normal, "Microsoft YaHei")
+
+        for style_name, size in (("Heading 1", 16), ("Heading 2", 13), ("Heading 3", 11.5)):
+            style = doc.styles[style_name]
+            style.font.name = "Microsoft YaHei"
+            style.font.size = Pt(size)
+            style.font.bold = True
+            self._set_east_asia_font(style, "Microsoft YaHei")
+
+        for raw_line in lines:
+            line = raw_line.strip()
+            if not line:
+                continue
+            if line.startswith("# "):
+                para = doc.add_heading(line[2:].strip(), level=0)
+                para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            elif line.startswith("## "):
+                doc.add_heading(line[3:].strip(), level=1)
+            elif line.startswith("### "):
+                doc.add_heading(line[4:].strip(), level=2)
+            elif line.startswith("#### "):
+                doc.add_heading(line[5:].strip(), level=3)
+            elif line.startswith("- "):
+                doc.add_paragraph(line[2:].strip(), style="List Bullet")
+            else:
+                self._add_body_paragraph(doc, line)
+
+        footer = doc.sections[0].footer.paragraphs[0]
+        footer.text = "PubMed Cancer Research Daily Brief"
+        footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+        doc.core_properties.title = "PubMed Cancer Research Daily Brief"
+        doc.core_properties.subject = "Daily PubMed cancer research literature brief"
+        doc.core_properties.author = "PubMed Cancer Brief Automation"
+        doc.save(docx_path)
+        return docx_path
+
+    def _add_body_paragraph(self, doc, line: str) -> None:
+        field_prefixes = {
+            "Title",
+            "Journal",
+            "Journal priority note",
+            "Date",
+            "PMID",
+            "DOI",
+            "Authors",
+            "Abstract unavailable",
+            "Study type",
+            "Core methods",
+            "Main findings",
+            "Innovation",
+            "Relevance to ccRCC",
+            "Actionable idea",
+            "PubMed link",
+        }
+        if ": " in line:
+            prefix, value = line.split(": ", 1)
+            if prefix in field_prefixes:
+                para = doc.add_paragraph()
+                para.add_run(f"{prefix}: ").bold = True
+                para.add_run(value)
+                return
+        doc.add_paragraph(line)
+
+    def _set_east_asia_font(self, style, font_name: str) -> None:
+        from docx.oxml.ns import qn
+
+        run_property = style.element.get_or_add_rPr()
+        fonts = run_property.rFonts
+        if fonts is None:
+            fonts = OxmlElement("w:rFonts")
+            run_property.append(fonts)
+        fonts.set(qn("w:eastAsia"), font_name)
 
     def _hotspots(self, selected: dict[str, list[Paper]], categories: dict) -> list[str]:
         hotspots = []
